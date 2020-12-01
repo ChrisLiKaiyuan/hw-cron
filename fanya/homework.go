@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	NONE_EXPIRED = -62135596800
+	//NONE_EXPIRED = -62135596800
 
 	TODO     = iota // 待做
 	FINISHED        // 已完成、待批阅
@@ -57,6 +57,9 @@ func (f *Fanya) GetHomeworks(course Courses) ([]Homework, error) {
 	}
 
 	homeworkTitleNodes := htmlquery.Find(nodes, `//*[@id="RightCon"]/div/div/div[2]/ul/li/div[1]/p/a`)
+	if len(homeworkTitleNodes) > 10 {
+		homeworkTitleNodes = homeworkTitleNodes[0:10]
+	}
 	homeworks := make([]Homework, len(homeworkTitleNodes))
 	for i, node := range homeworkTitleNodes {
 		for _, attr := range node.Attr {
@@ -68,6 +71,9 @@ func (f *Fanya) GetHomeworks(course Courses) ([]Homework, error) {
 	}
 
 	homeworkBeginTimeNodes := htmlquery.Find(nodes, `//*[@id="RightCon"]/div/div/div[2]/ul/li/div[1]/span[1]/text()`)
+	if len(homeworkBeginTimeNodes) > 10 {
+		homeworkBeginTimeNodes = homeworkBeginTimeNodes[0:10]
+	}
 	for i, node := range homeworkBeginTimeNodes {
 		homeworks[i].Begin = time.Time{}
 
@@ -79,6 +85,9 @@ func (f *Fanya) GetHomeworks(course Courses) ([]Homework, error) {
 	}
 
 	homeworkEndTimeNodes := htmlquery.Find(nodes, `//*[@id="RightCon"]/div/div/div[2]/ul/li/div[1]/span[2]/text()`)
+	if len(homeworkEndTimeNodes) > 10 {
+		homeworkEndTimeNodes = homeworkEndTimeNodes[0:10]
+	}
 	for i, node := range homeworkEndTimeNodes {
 		homeworks[i].End = time.Time{}
 
@@ -91,6 +100,9 @@ func (f *Fanya) GetHomeworks(course Courses) ([]Homework, error) {
 	}
 
 	homeworkStatusNodes := htmlquery.Find(nodes, `//*[@id="RightCon"]/div/div/div[2]/ul/li/div[1]/span[3]/strong/text()`)
+	if len(homeworkStatusNodes) > 10 {
+		homeworkStatusNodes = homeworkStatusNodes[0:10]
+	}
 	for i, node := range homeworkStatusNodes {
 		status := strings.TrimSpace(node.Data)
 		switch status {
