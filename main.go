@@ -35,12 +35,10 @@ func main() {
 	}
 
 	// HACK: get the first and the third term.
-	courses0, err := fy.GetCourseList(terms[14])
+	courses, err := fy.GetCourseList(terms[14])
 	if err != nil {
 		log.Fatal("Failed to get courses list: %v", err)
 	}
-
-	courses := append(courses0)
 
 	Acontent := ""
 
